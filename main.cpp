@@ -58,11 +58,24 @@ void cout_list(node_t *listfirst,int size){
     cout<<"\n";
 
 }
-/*void reverse_list(node_t *&listfirst,node_t* &listlast,int size){
-    for(node_t *counter=listlast->next;counter!= nullptr;counter=counter->next){
-
+void reverse_list(node_t *&listfirst,node_t* &listlast,int size){
+    if(size==0){
+        return;
     }
-}*/
+    node_t * fakelistfirst=listlast;
+    while(listlast!=listfirst) {
+      listlast->next = listfirst;
+
+      for (node_t *counter = listlast->next; counter!=listlast; counter = counter->next) {
+          listlast->next = counter;
+      }
+
+      listlast=listlast->next;
+  }
+    listfirst=fakelistfirst;
+    listlast->next= nullptr;
+
+}
 int main() {
  node_t* listfirstptr= nullptr;
  node_t* listlastptr= nullptr;
@@ -75,14 +88,19 @@ int main() {
              int nw;
              cin>>nw;
              add_to_list(listfirstptr,listlastptr,nw,size);
+             cout_list(listfirstptr,size);
              break;
          case '-':
              deletefirst(listfirstptr,listlastptr,size);
+             cout_list(listfirstptr,size);
              break;
          case '=':
              cout_list(listfirstptr,size);
              break;
          case '/':
+             reverse_list(listfirstptr,listlastptr,size);
+
+             cout_list(listfirstptr,size);
              break;
 
      }
