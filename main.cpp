@@ -27,12 +27,15 @@ void add_to_list(node_t *&listfirst,node_t *&listlast,int valueadd,int &size){
 
 
 }
-void deletefirst(node_t *&listfirst,int &size){
+void deletefirst(node_t *&listfirst,node_t *&listlast,int &size){
     if(size==0){
         return;
     }
     node_t *nh=listfirst;
     listfirst=listfirst->next;
+    if(listfirst== nullptr){
+        listlast= nullptr;
+    }
     delete(nh);
     size--;
 }
@@ -42,7 +45,7 @@ void cout_list(node_t *listfirst,int size){
     }
     cout<<"\n";
 
-    for(node_t *counter=listfirst;counter->next!= nullptr;counter=counter->next){
+    for(node_t *counter=listfirst;counter!= nullptr;counter=counter->next){
         cout<<"| "<<counter->value<<" |";
         if(counter->next!= nullptr){
             cout<<"--->";
@@ -55,15 +58,36 @@ void cout_list(node_t *listfirst,int size){
     cout<<"\n";
 
 }
+/*void reverse_list(node_t *&listfirst,node_t* &listlast,int size){
+    for(node_t *counter=listlast->next;counter!= nullptr;counter=counter->next){
+
+    }
+}*/
 int main() {
  node_t* listfirstptr= nullptr;
  node_t* listlastptr= nullptr;
  int size=0;
- add_to_list(listfirstptr,listlastptr,1,size);
- add_to_list(listfirstptr,listlastptr,1,size);
-    add_to_list(listfirstptr,listlastptr,1,size);
-    add_to_list(listfirstptr,listlastptr,1,size);
-    cout_list(listfirstptr,size);
+ char op;
+    cin>>op;
+ while(op!='q'){
+     switch(op){
+         case '+':
+             int nw;
+             cin>>nw;
+             add_to_list(listfirstptr,listlastptr,nw,size);
+             break;
+         case '-':
+             deletefirst(listfirstptr,listlastptr,size);
+             break;
+         case '=':
+             cout_list(listfirstptr,size);
+             break;
+         case '/':
+             break;
+
+     }
+     cin>>op;
+ }
 
 
 
